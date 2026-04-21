@@ -1,0 +1,105 @@
+<!-- 💌 Invitation -->
+<div class="container">
+  <h2>Rahul ❤️ Priya</h2>
+
+  <p id="guestName" class="invite-text"></p>
+
+  <p class="invite-text">
+    Together with their families,<br>
+    invite you to celebrate their wedding<br><br>
+    📅 25 December 2026<br>
+    📍 Siliguri, West Bengal
+  </p>
+
+  <!-- 🎵 BGM Section -->
+  <div class="bgm-section">
+    <h3>🎶 Our Song</h3>
+    <p id="songTitle">Perfect - Ed Sheeran</p>
+
+    <audio id="bgm" loop>
+      <source src="your-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <button onclick="toggleMusic()" id="musicControl">▶ Play Music</button>
+  </div>
+
+  <!-- 🖼️ Couple Photos -->
+  <h3>Our Moments</h3>
+  <div class="gallery">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+  </div>
+
+  <!-- 📍 Google Map -->
+  <div class="map">
+    <h3>Venue Location</h3>
+    <iframe 
+      src="https://www.google.com/maps?q=Siliguri&output=embed"
+      width="90%" height="300" style="border:0;" allowfullscreen="">
+    </iframe>
+  </div>
+</div>
+
+<style>
+.bgm-section {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.bgm-section button {
+  padding: 10px 20px;
+  border: none;
+  background: #000;
+  color: #fff;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+</style>
+
+<script>
+// 🎯 Get name from URL
+function getGuestName() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('name');
+}
+
+// ✨ Display personalized message
+const guest = getGuestName();
+const guestElement = document.getElementById("guestName");
+
+if (guest) {
+  guestElement.innerHTML = `Dear <strong>${guest}</strong>,<br>You are cordially invited 💌`;
+} else {
+  guestElement.innerHTML = `Dear Guest,<br>You are cordially invited 💌`;
+}
+
+// 🎵 Music Control
+let isPlaying = false;
+
+function toggleMusic() {
+  const music = document.getElementById("bgm");
+  const btn = document.getElementById("musicControl");
+
+  if (!isPlaying) {
+    music.play();
+    btn.innerText = "⏸ Pause Music";
+    isPlaying = true;
+  } else {
+    music.pause();
+    btn.innerText = "▶ Play Music";
+    isPlaying = false;
+  }
+}
+
+// ▶ Auto-play after first user interaction (mobile safe)
+document.body.addEventListener("click", function () {
+  const music = document.getElementById("bgm");
+  if (!isPlaying) {
+    music.play().catch(()=>{});
+    document.getElementById("musicControl").innerText = "⏸ Pause Music";
+    isPlaying = true;
+  }
+}, { once: true });
+</script>
